@@ -11,7 +11,7 @@ export default class Layout extends Component {
     constructor(props){
         super(props)
         this.state = {
-            datos,
+            datos: [],
             historia: 0,
             botonA: 0,
             botonB: 0,
@@ -19,7 +19,13 @@ export default class Layout extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentWillMount(){
+        this.setState({
+            datos
+        })
+    }
+
+    componentDidUpdate(prevState){
         if(prevState.historia !== this.state.historia){
             array.push(this.state.historial);
         }
@@ -66,8 +72,8 @@ export default class Layout extends Component {
         return (
             <div className="layout">
                 <h1 className="historia">{datos[this.state.historia].historia}</h1>
-                <Botones data={this.state} handleChangeButtonA={this.handleChangeButtonA} handleChangeButtonB={this.handleChangeButtonB} />
-                <Historial data={this.state} historial={array.map((e, i) => <li key={i}>{e}</li>)} />
+                <Botones data={this.state.datos} dataA={this.state.botonA} dataB={this.state.botonB} handleChangeButtonA={this.handleChangeButtonA} handleChangeButtonB={this.handleChangeButtonB} />
+                <Historial data={this.state.historial} historial={array.map((e, i) => <li key={i}>{e}</li>)} />
             </div>
         )
     }
